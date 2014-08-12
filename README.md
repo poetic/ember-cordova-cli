@@ -22,6 +22,7 @@ globally for this command to work.
 
 ## Commands
 + `ember cordova:init com.poetic.myapp --platform ios` initialize cordova project
++ `ember cordova platform add android` Adds another platform to an already initialized cordova project
 + `ember cordova:open` open cordova xcode project
 + `ember cordova:build --environment production --platform ios` build cordova project
 + `ember cordova:archive 0.0.2 --environment staging --commit --tag` archive ios project with xcode
