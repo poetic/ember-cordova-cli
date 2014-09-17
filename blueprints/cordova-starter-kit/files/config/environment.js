@@ -31,8 +31,13 @@ module.exports = function(environment) {
     },
 
     cordova: {
-      rebuildOnChange: true,
-      emulate: false
+      rebuildOnChange: false,
+      emulate: false,
+      emberUrl: 'http://' + addresses[0] + ':4200',
+      liveReload: {
+        enabled: false,
+        platform: 'ios'
+      }
     }
   };
 
@@ -43,7 +48,7 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     ENV.APP.LOG_VIEW_LOOKUPS = true;
 
-    ENV.apiUrl = 'http://' + addresses[0] + ':3000/api/v1';
+    ENV.apiUrl   = 'http://' + addresses[0] + ':3000/api/v1';
     ENV.development = true;
   }
 
