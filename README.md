@@ -27,7 +27,7 @@ ember generate cordova-init com.reverse.domain
 ```
 
 This will generate a base cordova iOS app and store it within the `cordova/`
-directory. If you would like to add other platforms, you can run the 
+directory. If you would like to add other platforms, you can run the
 `ember cordova` command:
 
 ```sh
@@ -46,7 +46,8 @@ globally for this command to work.
   base setup for projects I develop.
 
 ## Commands
-+ `ember cordova:open` open xcode project
++ `ember cordova:open --platform android --application eclipse` opens native project
+  if no application defined it will use the default
 + `ember cordova:build --environment production --platform ios` build cordova project
 + `ember cordova:archive 0.0.2 --environment staging --commit --tag` archive ios project with xcode
 + `ember cordova:prepare` needs to be run after cloning a project
@@ -112,7 +113,7 @@ config. See the section below for the options.
 ### Configuration
 
 All configuration is currently optional. Configuration will be done in your
-app's config/environment.js file. You need to set it up like this: 
+app's config/environment.js file. You need to set it up like this:
 
 ```js
 ENV.cordova = {
