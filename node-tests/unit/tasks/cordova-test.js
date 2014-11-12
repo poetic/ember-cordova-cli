@@ -4,20 +4,20 @@ describe('Tasks - Cordova', function() {
       '../utils/run-command': function(command, msg, options){
         expect(command).to.match(/cordova plugins add org\.apache\.test$/);
         return noop;
-      },
+      }
     });
 
-    return cordova(['plugins', 'add', 'org.apache.test'], { root: 'test' })();
+    return cordova('development', ['plugins', 'add', 'org.apache.test'], { root: 'test' })();
   });
 
   it('executes in proper directory', function() {
     var cordova = proxyquire('../../lib/tasks/cordova', {
       '../utils/run-command': function(command, msg, options){
-        expect(options.cwd).to.match(/test\/cordova$/);
+        expect(options.cwd).to.match(/test\/cordova\/development$/);
         return noop;
-      },
+      }
     });
 
-    return cordova(['plugins', 'add', 'org.apache.test'], { root: 'test' })();
+    return cordova('development', ['plugins', 'add', 'org.apache.test'], { root: 'test' })();
   });
 });

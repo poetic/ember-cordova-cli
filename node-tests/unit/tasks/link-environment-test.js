@@ -13,12 +13,12 @@ describe('Tasks - Link Environment', function() {
     process.chdir = process._chdir;
   });
 
-  it('removes the cordova/www dir', function() {
+  it('removes the cordova/[environment]/www dir', function() {
     var createProject = proxyquire('../../lib/tasks/link-environment', {
       './verify-dist': function() { return resolveFn; },
       'fs-extra': {
         remove: function(path, callback) {
-          expect(path).to.eql('project-root/cordova/www');
+          expect(path).to.eql('project-root/cordova/development/www');
           return callback(null, true);
         },
         symlink: function(from, to, type, _, callback) {
@@ -27,7 +27,7 @@ describe('Tasks - Link Environment', function() {
       }
     });
 
-    return createProject(project)();
+    return createProject(project, 'development')();
   });
 
   it('creates a relative dir symlink', function() {
@@ -46,6 +46,6 @@ describe('Tasks - Link Environment', function() {
       }
     });
 
-    return createProject(project)();
+    return createProject(project, 'development')();
   });
 });

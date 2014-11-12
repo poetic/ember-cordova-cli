@@ -13,7 +13,7 @@ describe('Model - ProjectWithConfig', function() {
   });
 
   it('adds the ember cordova config instance', function() {
-    project = projectWithConfig(project);
+    project = projectWithConfig(project, 'development');
     expect(project.cordovaConfig.id).to.equal('com.example.app');
   });
 });

@@ -1,6 +1,7 @@
 var projectWithConfig = require('../../lib/models/project-with-config');
 var Promise           = require('../../lib/ext/promise');
 var stringUtils       = require('../../lib/utils/string');
+var defaultENV        = 'development';
 
 module.exports = {
   locals: function(options) {
@@ -22,11 +23,12 @@ module.exports = {
   },
 
   setupCordova: function() {
-    var createProject   = require('../../lib/tasks/create-cordova-project')(this.project);
-    var addPlatforms    = require('../../lib/tasks/add-platforms')(this.project, this.options);
-    var updateConfig    = require('../../lib/tasks/update-config-xml')(this.project);
-    var linkEnvironment = require('../../lib/tasks/link-environment')(this.project);
+    var createDir       = require('../../lib/tasks/add-cordova-directory')(this.project);
+    var createProject   = require('../../lib/tasks/create-cordova-project')(this.project, defaultENV);
+    var addPlatforms    = require('../../lib/tasks/add-platforms')(this.project, this.options, defaultENV);
+    var updateConfig    = require('../../lib/tasks/update-config-xml')(this.project, defaultENV);
+    var linkEnvironment = require('../../lib/tasks/link-environment')(this.project, defaultENV);
 
-    return createProject().then(addPlatforms).then(updateConfig).then(linkEnvironment);
+    return createDir().then(createProject).then(addPlatforms).then(updateConfig).then(linkEnvironment);
   }
 };

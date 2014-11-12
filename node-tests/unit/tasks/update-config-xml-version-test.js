@@ -13,13 +13,13 @@ describe('Tasks - Update config xml version', function() {
       './modify-xml': proxyquire('../../lib/tasks/modify-xml', {
         'fs': {
           writeFileSync: function(path, xml) {
-            expect(path).to.eql(project.root + '/cordova/config.xml');
+            expect(path).to.eql(project.root + '/cordova/development/config.xml');
             expect(xml).to.match(/\sversion=\"0.1.0"\s/);
           }
         }
       })
     });
 
-    return update('0.1.0', project)();
+    return update('0.1.0', project, 'development')();
   });
 });

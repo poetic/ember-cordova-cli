@@ -50,7 +50,7 @@ describe('Tasks - Archive', function() {
         return resolveFn;
       },
       './update-config-xml-version': function(version, project) {
-        expect(version).to.eql(archiveVersion)
+        expect(version).to.eql(archiveVersion);
         return resolveFn;
       },
       './build': resolveFn
@@ -103,6 +103,20 @@ describe('Tasks - Archive', function() {
       ];
 
       var options = { tag: true };
+
+      return expectCommandsToBeCalled(
+        archiveVersion, options, project, commands
+      );
+    });
+
+    it('with environment option', function() {
+      var commands = [
+        'update-config-xml-version',
+        'build',
+        'xcodebuild -scheme ' + project.cordovaConfig.name + ' archive'
+      ];
+
+      var options = { environment : 'production' };
 
       return expectCommandsToBeCalled(
         archiveVersion, options, project, commands

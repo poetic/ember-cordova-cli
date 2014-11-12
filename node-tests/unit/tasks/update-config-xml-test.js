@@ -39,5 +39,5 @@ function proxyUpdate(callback) {
     })
   });
 
-  return update(project)();
+  return update(project, 'development')();
 }
