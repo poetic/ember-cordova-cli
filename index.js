@@ -51,9 +51,21 @@ module.exports = {
     return this.project.config(process.env.EMBER_ENV || 'development').cordova;
   },
 
+  firstBuild: true,
+  enablePostBuild: false,
+
   postBuild: function () {
-    if (this._isTargetCordova()) {
-      return postBuild(this.project, this.cdvConfig())();
+    var options = this.cdvConfig();
+
+    if (this._isTargetCordova() && this.enablePostBuild && this.firstBuild && options.liveReload !== undefined && options.liveReload.enabled) {
+      var func = postBuild(this.project, options, this.host, this.port, this.firstBuild);
+      // if the only thing we want is the live reload, no
+      // need to re-build everytime, but we need to modify the xml
+      // so
+      if (!options.rebuildOnChange) {
+        this.firstBuild = false;
+      }
+      return func();
     }
     else {
       return function () {
@@ -112,5 +124,13 @@ module.exports = {
     }
 
     return tree;
+  },
+  isDevelopingAddong: function() {
+    return true;
+  },
+  serverMiddleware: function(config) {
+    this.host = config.options.host;
+    this.port = config.options.port;
+    this.enablePostBuild = true;
   }
 };
