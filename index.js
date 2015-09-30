@@ -61,7 +61,8 @@ module.exports = {
       var func = postBuild(this.project, options, this.host, this.port, this.firstBuild);
       // if the only thing we want is the live reload, no
       // need to re-build everytime, but we need to modify the xml
-      // so
+      // so this variable will help us only build one time. After that
+      // Ember CLI's live reload will work fine
       if (!options.rebuildOnChange) {
         this.firstBuild = false;
       }
@@ -128,6 +129,15 @@ module.exports = {
   isDevelopingAddong: function() {
     return true;
   },
+  /**
+   * We'll use this hook to gather the information
+   * we need to provide fast live reloads.
+   *
+   * PostBuild should really only be called when live
+   * reloading, cause it just compiles and emulates
+   * and don't think we need it when building for
+   * production.
+   */
   serverMiddleware: function(config) {
     this.host = config.options.host;
     this.port = config.options.port;
