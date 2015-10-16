@@ -28,7 +28,8 @@
     "pleasant-progress": "^1.0.1",
     "recursive-readdir": "^1.1.1",
     "rsvp": "^3.0.6",
-    "underscore.string": "^2.3.3"
+    "underscore.string": "^2.3.3",
+    "merge-defaults": "^0.2.1"
   },
   "devDependencies": {
     "broccoli-asset-rev": "2.0.0",
