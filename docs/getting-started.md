@@ -1,7 +1,7 @@
 # Getting Started
 
 This guide will walk you through setting up your first app with
-ember-cli-cordova. 
+ember-cli-cordova.
 
 ## Prerequisites
 
@@ -22,9 +22,9 @@ After that's set up, we need to add the ember-cli-cordova addon to the applicati
 ember install ember-cli-cordova
 ```
 
-Ember cli-cordova requires cordova. If you don't have cordova, use this line to install it. 
+Ember cli-cordova requires cordova. If you don't have cordova, use this line to install it.
 
-``` 
+```
 npm install -g cordova
 ```
 
@@ -135,19 +135,21 @@ now](https://github.com/poetic/ember-cli-cordova/pull/56).
 Livereload is currently disabled by default and will need to be turned on in
 your `config/environment`. To enable it, set `cordova.liveReload.enabled` to
 true, and set `cordova.liveReload.platform` to the platform you will be running
-the app on.
+the app on. Disable `cordova.rebuildOnChange` to enable fast live reload using
+the built-in live reloading mechanisms of Ember CLI.
 
-**A few things to be aware of**
+Now that you have configured livereload, you just need to run the ember server normally,
+using the traditional command, with only one difference: you need to specify the host to your
+LAN IP address (something like 192.168.0.3), so the emulator or a device picks up the correct page
+and livereload works.
 
-- You will need to rebuild with 'ember cordova:build' when you make changes to the
-  environment config.
-- When you add/remove/update plugins or native code you will also need to run
-  the `ember cordova:build`.
-- You will need to set the `emberUrl` in the config if you are running the app
-  on a device that is not on the same computer or if your ember server is on
-  a different port. It defaults to `http://localhost:4200`. The reason for this
-  is that when the app starts up, it redirects to the url your ember server is
-  running on so it must be set correctly.
-- Livereload is a fairly new feature in ember-cli-cordova and we are really
-  excited about it. If you have any trouble with it please submit an issue or PR
-  so that we can resolve it.
+```
+ember s --host=<your_lan_ip_address>
+```
+
+Again, like already said, this isn't rebuilding cordova every time
+you make a change, and there are some things you should be aware that needs the server
+to be restarted in order to cordova to rebuild.
+
+- When making changes to the environment config.
+- When you add/remove/update plugins or native code.

@@ -4,7 +4,8 @@ var path = require('path');
 var fs = require('fs');
 var commands = require('./lib/commands');
 var postBuild = require('./lib/tasks/post-build');
-var defaults = require('lodash').defaults;
+var _ = require('lodash');
+_.defaults = require('merge-defaults');
 var chalk = require('chalk');
 var mergeTrees = require('broccoli-merge-trees');
 var Funnel = require('broccoli-funnel');
@@ -28,10 +29,17 @@ module.exports = {
     else if (!conf.locationType) {
       conf.locationType = config.defaultLocationType || 'auto';
     }
-    conf.cordova = defaults(config.cordova || {}, {
+
+    /**
+     * Need defaultsDeep here instead of just `defaults` since we
+     * have a object as default option, nd that would not be picked...
+     */
+    conf.cordova = _.defaults(config.cordova || {}, {
       liveReload: {
         enabled:  false,
-        platform: 'ios'
+        platform: 'ios',
+        hostIP: process.env.CORDOVA_HOST_IP,
+        hostPort: process.env.CORDOVA_HOST_PORT
       }
     });
     return conf;
@@ -51,9 +59,22 @@ module.exports = {
     return this.project.config(process.env.EMBER_ENV || 'development').cordova;
   },
 
+  firstBuild: true,
+  enablePostBuild: false,
+
   postBuild: function () {
-    if (this._isTargetCordova()) {
-      return postBuild(this.project, this.cdvConfig())();
+    var options = this.cdvConfig();
+
+    if (this._isTargetCordova() && this.enablePostBuild && this.firstBuild && options.liveReload !== undefined && options.liveReload.enabled) {
+      var func = postBuild(this.project, options, this.firstBuild);
+      // if the only thing we want is the live reload, no
+      // need to re-build everytime, but we need to modify the xml
+      // so this variable will help us only build one time. After that
+      // Ember CLI's live reload will work fine
+      if (!options.rebuildOnChange) {
+        this.firstBuild = false;
+      }
+      return func();
     }
     else {
       return function () {
@@ -112,5 +133,20 @@ module.exports = {
     }
 
     return tree;
+  },
+  isDevelopingAddong: function() {
+    return true;
+  },
+  /**
+   * We'll use this hook to gather the information
+   * we need to provide fast live reloads.
+   *
+   * PostBuild should really only be called when live
+   * reloading, cause it just compiles and emulates
+   * and don't think we need it when building for
+   * production.
+   */
+  serverMiddleware: function(config) {
+    this.enablePostBuild = true;
   }
 };

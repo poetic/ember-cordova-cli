@@ -34,6 +34,7 @@ Please see our Getting Started guide
 + `ember cordova:prepare` needs to be run after cloning a project
 + `ember cordova` Passes commands(plugin(s), platform(s), run, emulate) and arguments to the cordova command
 + `ember help` ember cli help with a section for addon provided commands as well
++ `ember s --host=<ip>` starts ember server with live reload. Check the Getting Started guide for further instructions
 
 # Docs
 
