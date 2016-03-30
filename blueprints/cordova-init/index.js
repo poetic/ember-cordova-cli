@@ -26,8 +26,7 @@ module.exports = {
     var createProject   = require('../../lib/tasks/create-cordova-project')(this.project);
     var addPlatforms    = require('../../lib/tasks/add-platforms')(this.project, this.options);
     var updateConfig    = require('../../lib/tasks/update-config-xml')(this.project);
-    var linkEnvironment = require('../../lib/tasks/link-environment')(this.project);
 
-    return createProject().then(addPlatforms).then(updateConfig).then(linkEnvironment);
+    return createProject().then(addPlatforms).then(updateConfig);
   }
 };
