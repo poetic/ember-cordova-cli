@@ -42,6 +42,20 @@ would pass in `--platform=android` at the end or set your default platform in [c
 ember generate cordova-init com.poeticsystems.hello
 ```
 
+At this point if you see the following error ([source](https://github.com/poetic/ember-cli-cordova/issues/125))
+
+```sh
+ ember-cli-cordova: You must specify the locationType as 'hash' in your environment.js or rename it to defaultLocationType.
+```
+
+Replace the ```locationType``` with
+
+```sh
+ defaultLocationType: 'auto',
+```
+
+and then re-run ```ember generate cordova-init # with your parameters``` 
+
 This will prompt you to overwrite some default files. You should overwrite them
 as they provide some required settings and helpful additions.
 
