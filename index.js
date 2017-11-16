@@ -73,13 +73,13 @@ module.exports = {
       var pluginsPath;
 
       if (config.liveReload.platform === 'ios') {
-        pluginsPath = path.join(platformsPath, 'ios', 'www');
+        pluginsPath = path.join(platformsPath, 'ios', 'platform_www');
       }
       else if (config.liveReload.platform === 'browser') {
-        pluginsPath = path.join(platformsPath, 'browser', 'www');
+        pluginsPath = path.join(platformsPath, 'browser', 'platform_www');
       }
       else if (config.liveReload.platform === 'android') {
-        pluginsPath = path.join(platformsPath, 'android', 'assets', 'www');
+        pluginsPath = path.join(platformsPath, 'android', 'assets', 'platform_www');
       }
       else {
         pluginsPath = path.join(platformsPath, config.liveReload.platform);
